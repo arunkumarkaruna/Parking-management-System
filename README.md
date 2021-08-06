@@ -1,2 +1,2 @@
-# Parking-management-System
-parkaro decreses your time for waiting in parking slot.
+# Park-Karo
+A web app to organize parking in crowded areas

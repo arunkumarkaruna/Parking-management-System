@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track My Booking</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/tailwind.output.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="../js/init-alpine.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+</head>
+<body class="dark:bg-black">
+    <% if (booking != null) { %>
+        <button class="bg-purple-300  uppercase px-8 py-3 ml-2 mt-2 hover:bg-purple-400 rounded-full  font-serif text-purple-100 mr-1 mb-1" type="button">
+            <a href="/dashboard" target="_blank" class="hover:no-underline hover:text-purple-100">Back to Dashboard</a>
+          </button>
+    <div class="antialiased font-sans dark:bg-black bg-purple-100 mt-36 rounded">        
+        <div class="container mx-auto px-4 sm:px-8">
+        <div class="py-8">
+            <div>
+                <h2 class="text-2xl text-purple-500 font-serif leading-tight">Track My Bookings</h2>
+            </div>
+            </div> 
+    <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+        <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+            <table class="min-w-full leading-normal">
+                <thead>
+                    <tr>
+                        <th
+                            class="dark:bg-black px-3 py-3 border-r-2 border-purple-200 bg-purple-100 text-left text-xs font-semibold text-purple-500 uppercase tracking-wider">
+                             Owner Name
+                        </th>
+                        <th class="dark:bg-black px-5 py-3 border-r-2 border-purple-200 bg-purple-100 text-left text-xs font-semibold text-purple-500 uppercase tracking-wider">
+                            Owner Mail
+                        </th>
+                        <th
+                        class="dark:bg-black px-2 py-3 border-r-2 border-purple-200 bg-purple-100 text-left text-xs font-semibold text-purple-500 uppercase tracking-wider">
+                        Vehicle No
+                    </th> 
+                    <th
+                    class="dark:bg-black px-5 py-3 border-r-2 border-purple-200 bg-purple-100 text-left text-xs font-semibold text-purple-500 uppercase tracking-wider">
+                   Area
+                    </th>                        
+                    <th
+                        class="dark:bg-black px-2 py-1 border-r-2 border-purple-200 bg-purple-100 text-left text-xs font-semibold text-purple-500 uppercase tracking-wider">
+                       Price
+                    </th>
+                    <th
+                    class="dark:bg-black px-2 py-3 border-r-2 border-purple-200 bg-purple-100 text-left text-xs font-semibold text-purple-500 uppercase tracking-wider">
+                    Booking Date
+                </th>
+                    <th
+                    class="dark:bg-black px-5 py-3 border-r-2 border-purple-200 bg-purple-100 text-left text-xs font-semibold text-purple-500 uppercase tracking-wider">
+                    Time Needed
+                </th>
+                <th
+                class="dark:bg-black px-5 py-3 border-r-2 border-purple-200 bg-purple-100 text-left text-xs font-semibold text-purple-500 uppercase tracking-wider">
+                Start Time 
+            </th>
+            <th
+                class="dark:bg-black px-5 py-3 border-r-2 border-purple-200 bg-purple-100 text-left text-xs font-semibold text-purple-500 uppercase tracking-wider">
+                End Time
+            </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="dark:bg-black px-5 py-2 border-b border-r-2 border-purple-200 bg-purple-50 text-sm">
+                    <div class="flex items-center">
+                        <div>
+                            <p class="text-indigo-500 whitespace-no-wrap">
+                                <%= booking.firstname %>
+                            </p>
+                        </div>
+                    </div>
+                </td>
+                <td class="dark:bg-black px-5 py-2 border-b border-r-2 border-purple-200 bg-purple-50 text-sm">
+                    <p class="text-indigo-500 whitespace-no-wrap"><%= booking.email %></p>
+                </td>
+                <td class="dark:bg-black px-2 py-3 border-b border-r-2 border-purple-200 bg-purple-50 text-sm">
+                    <p class="text-indigo-500 whitespace-no-wrap">
+                        <%= booking.vno %>
+                    </p>
+                </td>
+                <td class="dark:bg-black px-4 py-2 border-b border-r-2 border-purple-200 bg-purple-50 text-sm">
+                    <p class="text-indigo-500 whitespace-no-wrap">
+                        <%= booking.area %>
+                    </p>
+                </td>
+                <td class="dark:bg-black px-2 py-3 border-b border-r-2 border-purple-200 bg-purple-50 text-sm">
+                    <p class="text-indigo-500 whitespace-no-wrap">
+                        <%= booking.price %>
+                    </p>
+                </td>
+                <td class="dark:bg-black px-3 py-2 border-b border-r-2 border-purple-200 bg-purple-50 text-sm">
+                    <p class="text-indigo-500 whitespace-no-wrap"><%= booking.createdAt %></p>
+                </td>
+                <td class="dark:bg-black px-3 py-2 border-b border-r-2 border-purple-200 bg-purple-50 text-sm">
+                    <span
+                        class="relative inline-block px-3 py-1 font-semibold text-green-900 dark:text-green-200 leading-tight ml-5">
+                        <span aria-hidden
+                            class="absolute inset-0 bg-green-200 dark:bg-green-900 opacity-50 rounded-full"></span>
+                        <span id="min" class="relative text-right"><%= booking.time %> <%= booking.timeflag%></span>
+                    </span>
+                </td>
+                <td class="dark:bg-black px-3 py-2 border-b border-r-2 border-purple-200 bg-purple-50 text-sm">
+                    <span
+                        class="relative inline-block px-3 py-1 font-semibold text-green-900 dark:text-green-200 leading-tight ml-3">
+                        <span aria-hidden
+                            class="absolute inset-0 bg-green-200 dark:bg-green-900 opacity-50 rounded-full"></span>
+                            <% var d = booking.starttime;
+                            var s = "" + d;
+                            var t = s.slice(11, 20) %>
+                        <span id="time" class="relative text-right"><%= t %></span>
+                    </span>
+                </td>
+                <td class="dark:bg-black px-3 py-2 border-b border-r-2 border-purple-200 bg-purple-50 text-sm">
+                  <span
+                      class="relative inline-block px-3 py-1 font-semibold text-green-900 dark:text-green-200 leading-tight ml-3">
+                      <span aria-hidden
+                          class="absolute inset-0 bg-green-200 dark:bg-green-900 opacity-50 rounded-full"></span>
+                          <% var d1 = booking.endtime; 
+                          var s1 = "" + d1;
+                          var t1 = s1.slice(11, 20) %>
+                      <span id="end" class="relative text-right"><%= t1 %></span>
+                  </span>
+              </td>
+</tr>
+        </tbody>
+    <input type="hidden" id="bookingId" name="bookingId" value="<%= booking._id %>">
+    <input type="hidden" name="starttime" value="<%= booking.starttime %>" id="starttime">
+    <!-- <p id="endtime" style="color: rgb(230, 222, 222);"><%= booking.endtime %></p> -->
+    <input type="hidden" id="endtime" name="endtime" value="<%= booking.endtime %>">
+    <% } else { %>
+        <button class="bg-purple-300  uppercase px-8 py-3 ml-2 mt-2 hover:bg-purple-400 rounded-full  font-serif text-purple-100 mr-1 mb-1" type="button">
+            <a href="/dashboard" class="hover:no-underline hover:text-purple-100">Back to Dashboard</a>
+          </button>
+        <p class="dark:text-purple-600 text-xl">Currently, there are no bookings in place!</p>
+    <% } %>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+        var startTime = document.getElementById('starttime').value;
+        var endTime = document.getElementById('endtime').value;
+        socket.emit('time', endTime)
+        socket.on('finished', (data) => {
+            var id = {
+                items: [{ 
+                    bookingId: document.getElementById('bookingId').value,
+                }]
+            };
+            console.log(data);
+            fetch("/increasespot", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json"
+            },
+            body: JSON.stringify(id)
+        })
+        })
+    </script>
+</body>
+</html>

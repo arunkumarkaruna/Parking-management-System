@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/tailwind.output.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="../js/init-alpine.js"></script>
+    <title>Profile-Fill</title>
+</head>
+<body class="dark:bg-black">
+    <%- include('./partials/messages.ejs') %>
+    <section class="p-6 bg-coolGray-50 text-coolGray-900 dark:bg-black">
+        <form action="/profile" method="POST" enctype="multipart/form-data" class="container mx-auto flex flex-col space-y-12 ng-untouched ng-pristine ng-valid">
+          <fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm bg-purple-400 dark:bg-black">
+            <div class="space-y-2 col-span-full lg:col-span-2">
+              <p class="text-xl tracking-wider text-purple-50 font-sans dark:text-purple-500">Personal Information</p>
+              <p class="text-base font-sans tracking-wider text-purple-50 dark:text-purple-500">Please fill your personal details!</p>
+            </div>
+            <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+              <div class="col-span-full sm:col-span-3">
+                <label for="firstname" class="text-base tracking-wider ml-1 text-purple-50">First name</label>
+                <input id="firstname" type="text" name="firstname" placeholder="First name" value="<%= firstname %>" class="dark:bg-gray-700 dark:text-white w-full h-7 mt-1 pl-2 rounded-md focus:outline-none focus:ring focus:border-purple-300">
+              </div>
+              <div class="col-span-full sm:col-span-3">
+                <label for="lastname" class="text-base tracking-wider ml-1 text-purple-50">Last name</label>
+                <input id="lastname" type="text" name="lastname" placeholder="Last name" value="<%= lastname %>" class="dark:bg-gray-700 dark:text-white w-full h-7 mt-1 pl-2 rounded-md focus:outline-none focus:ring focus:border-purple-300">
+              </div>
+              <div class="col-span-full sm:col-span-3">
+                <label for="email" class="text-base tracking-wider ml-1 text-purple-50">Email</label>
+                <input id="email" type="email" placeholder="Email" name="email" value="<%= email %>" class="dark:bg-gray-700 dark:text-white w-full pl-2 h-7 mt-1 rounded-md focus:outline-none focus:ring focus:border-purple-300">
+              </div>
+              <div class="col-span-full">
+                <label for="address" class="text-base tracking-wider ml-1 text-purple-50">Address</label>
+                <input id="address" type="text" name="address" placeholder="" class="dark:bg-gray-700 dark:text-white w-full h-7 mt-1 pl-2 rounded-md focus:outline-none focus:ring focus:border-purple-300">
+              </div>
+              <div class="col-span-full sm:col-span-2">
+                <label for="city" class="text-base tracking-wider ml-1 text-purple-50">City</label>
+                <input id="city" type="text" name="city" placeholder="" class="dark:bg-gray-700 dark:text-white w-full h-7 mt-1 pl-2 rounded-md focus:outline-none focus:ring focus:border-purple-300">
+              </div>
+              <div class="col-span-full sm:col-span-2">
+                <label for="state" class="text-base tracking-wider ml-5 text-purple-50">State / Province</label>
+                <input id="state" type="text" name="state" placeholder="" class="dark:bg-gray-700 dark:text-white w-full h-7 mt-1  pl-2 rounded-md focus:outline-none focus:ring focus:border-purple-300">
+              </div>
+              <div class="col-span-full sm:col-span-2">
+                <label for="zip" class="text-base tracking-wider ml-10 text-purple-50">ZIP / Postal</label>
+                <input id="zip" type="text" name="zip" placeholder="" class="dark:bg-gray-700 dark:text-white w-full h-7 mt-1 pl-2 rounded-md focus:outline-none focus:ring focus:border-purple-300">
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm  bg-purple-400 dark:bg-black">
+            <div class="space-y-2 col-span-full lg:col-span-2">
+              <p class="text-xl tracking-wider text-purple-50 font-sans dark:text-purple-500">Profile</p>
+              <p class="text-base font-sans tracking-wider text-purple-50 dark:text-purple-500">Please complete your profile!</p>
+            </div>
+            <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+              <div class="col-span-full sm:col-span-3">
+                <label for="username" class="text-base tracking-wider ml-1 text-purple-50">Username</label>
+                <input id="username" type="text" name="username" placeholder="Username" value="<%= firstname+' '+lastname %>" class="dark:bg-gray-700 dark:text-white w-full h-7 mt-1 pl-2 rounded-md focus:outline-none focus:ring focus:border-purple-300">
+              </div>
+              <div class="col-span-full">
+                <label for="bio" class="text-base tracking-wider ml-1 text-purple-50">Bio</label>
+                <textarea id="bio" placeholder="" name="bio" class="dark:bg-gray-700 dark:text-white w-full  mt-1 pl-2 rounded-md focus:outline-none focus:ring focus:border-purple-300"></textarea>
+              </div>
+              <div class="col-span-full">
+                <label for="bio" class="text-base tracking-wider ml-1 text-purple-50">Photo</label>
+                <div class="flex items-center space-x-2">
+                  <!-- <img src="https://source.unsplash.com/30x30/?random" alt="" class="w-10 h-10 rounded-full bg-coolGray-300"> -->
+                  <input type="file" name="profilepic" class="dark:bg-gray-700 dark:text-white text-base tracking-wider ml-1 text-purple-50">
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm bg-purple-400 dark:bg-black">
+            <div class="space-y-2 col-span-full lg:col-span-2">
+              <p class="text-xl tracking-wider text-purple-50 font-sans dark:text-purple-500">Other Information</p>
+              <p class="text-base font-sans tracking-wider text-purple-50 dark:text-purple-500">Please fill the other details!</p>
+            </div>
+            <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+              <div class="col-span-full sm:col-span-3">
+                <label for="firstname" class="text-base tracking-wider ml-1 text-purple-50">Vehicle Prefered</label>
+                <input id="firstname" type="text" name="prefered" placeholder="Eg: Car, Bike" class="dark:bg-gray-700 dark:text-white w-full h-7 mt-1 pl-2 rounded-md focus:outline-none focus:ring focus:border-purple-300">
+              </div>
+              <div class="col-span-full sm:col-span-3">
+                <label for="lastname" class="text-base tracking-wider ml-1 text-purple-50">Plate No.</label>
+                <input id="lastname" type="text" name="plateno" placeholder="Vehicle Plate No." value="" class="dark:bg-gray-700 dark:text-white w-full h-7 mt-1 pl-2 rounded-md focus:outline-none focus:ring focus:border-purple-300">
+              </div>
+              <div class="col-span-full sm:col-span-3">
+                <label for="email" class="text-base tracking-wider ml-1 text-purple-50">User ID Proof</label>
+                <input id="email" type="text" name="idproof" placeholder="Aadhaar No, PAN No, Licence No" class="dark:bg-gray-700 dark:text-white w-full h-7 mt-1 pl-2 rounded-md focus:outline-none focus:ring focus:border-purple-300">
+              </div>
+            </div>
+          </fieldset>
+          <button type="submit" class="h-10 px-5 m-2 text-purple-100 transition-colors duration-150 bg-purple-600 rounded-lg focus:shadow-outline hover:bg-purple-700">Submit</button>
+        </form>
+      </section>
+</body>
+</html>

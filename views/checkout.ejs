@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Latest compiled and minified CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/tailwind.output.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="../js/init-alpine.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <title>Payment</title>
+</head>
+<body class="bg-purple-100 dark:bg-black">
+
+        <h1 class="display-3 mt-32 text-center text-purple-400">
+          Payment Page
+        </h1>
+        <p class="lead mt-7 text-center text-xs text-purple-400">This is the portal for payment</p>
+  <dl class="ml-96">
+                      <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ml-72">
+                        <dt class="text-xl font-serif text-purple-500">
+                          Name
+                        </dt>
+                        <dd class="mt-1 text-xl text-purple-500 sm:mt-0 sm:col-span-2 tracking-wider">
+                          <%= userFirstNameWhoBooked %>
+                        </dd>
+                      </div>
+                      <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ml-72">
+                        <dt class="text-xl font-serif text-purple-500">
+                          Email 
+                        </dt>
+                        <dd class="mt-1 text-xl text-purple-500 sm:mt-0 sm:col-span-2 tracking-wider">
+                          <%= userEmailWhoBooked %>
+                        </dd>
+                      </div>
+                      <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ml-72">
+                        <dt class="text-xl font-serif text-purple-500">
+                          Area
+                        </dt>
+                        <dd class="mt-1 text-xl text-purple-500 sm:mt-0 sm:col-span-2 tracking-wider">
+                          <%= area %>
+                        </dd>
+                      </div>
+                      <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ml-72">
+                        <dt class="text-xl font-serif text-purple-500">
+                          Time
+                        </dt>
+                        <dd class="mt-1 text-xl text-purple-500 sm:mt-0 sm:col-span-2 tracking-wider">
+                         <%= time %> <%= timeflag %>
+                        </dd>
+                      </div>
+                    </dl>
+                     <form action="/charge" method="POST">
+          <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%= publisherkey %>"
+            data-amount="<%= parseInt(price) %>"
+            data-name="Payment for Spot"
+            data-description="Pay for the charge based on time requirement"
+            data-currency="inr"
+            data-locale="auto">
+          </script>
+          <script>
+            // Hide default stripe button
+            document.getElementsByClassName('stripe-button-el')[0].style.display = 'none';
+          </script>
+          <input type="hidden" name="amount" value="<%= parseInt(price) %>">
+          <input type="hidden" name="id" value="<%= bookingId %>">
+          <div class="flex justify-center">
+            <button type="submit" class="bg-purple-500 px-8 py-3 hover:bg-purple-700 rounded-full font-sans text-white ">Purchase For ₹<%= parseInt(price)/100 %></button>
+            </div>
+        </form>
+</body>
+</html>

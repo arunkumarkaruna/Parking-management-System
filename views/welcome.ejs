@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Management</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/tailwind.output.css" />
+    <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+      defer
+    ></script>
+    <script src="../js/init-alpine.js"></script>
+    <style>
+      .loc {
+        display: flex;
+        justify-content: space-between;
+      }
+    </style>
+</head>
+<body class="dark:bg-black">
+    <header class="bg-white dark:bg-black">
+        <%- include('./partials/header.ejs') %>
+
+        <div class="container mx-auto px-6 py-16 dark:bg-black">
+            <div class="md:flex items-center">
+                <div class="w-full md:w-1/2">
+                    <div class="max-w-lg">
+                        <h1 class="text-gray-800 dark:text-white text-2xl font-semibold uppercase md:text-3xl">Best Place To Book Your Spot</h1>
+                        <p class="mt-2 text-gray-600 dark:text-white">This is a great place to ensure a spot to park your vehicle. This enables the safety of your vehicle.</p>
+                    </div>
+                </div>
+        
+                <div class="flex items-center justify-center w-full mt-6 md:mt-0 md:w-1/2">
+                    <img class="max-w-2xl w-full h-full" src="../svg/landing.svg" alt="">
+                </div>
+            </div>
+        </div>
+    </header><br><br><br><br><br><br><br>
+
+    <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4 dark:bg-black">
+      <!-- Card -->
+      <% for (var i=0; i<len ; i++) { %>
+      <div
+        class="flex items-center p-4 rounded-lg shadow-xs dark:bg-black"
+      >
+      <div class="max-w-xs mx-auto dark:border-pink-500  dark:bg-gray-700 shadow-lg rounded-lg overflow-hidden">
+        <div class="px-4 py-2">
+          <div class="loc">
+            <h1 id="area" class="text-gray-800 dark:text-white  font-bold text-3xl uppercase"><%= area[i] %></h1><button class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" onclick="getLocation();">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mb-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+              </svg> 
+            </button>
+            </div>    
+                    <p id="firstname" class="text-gray-600 dark:text-gray-400 text-sm mt-1"><%= firstname[i] %></p>
+                  <p id="firstname" class="text-gray-600 dark:text-gray-400 text-sm mt-1"><%= createdAt[i] %></p>
+            
+        </div>
+  
+        <img class="h-48 w-full object-cover mt-2" src="../uploads/spot/<%= file[i] %>" alt="Spots">
+  
+        <div class="flex items-center justify-between px-4 py-2 bg-gray-900">
+          <% if (capacity[i] == 0) { %>
+            <h1 class="text-white font-bold text-lg"><%= capacity[i] %></h1> 
+            <button class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" onclick="getLocation();">
+              No vacancy
+            </button>
+          <% } if (capacity[i] > 0) { %>
+            <h1 class="text-white font-bold text-lg"><%= capacity[i] %></h1> 
+              
+            <a href="/users/login"><button type="submit" class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" style="transition: all .15s ease">
+              Book
+            </button></a>
+            <% } %>
+        </div>
+    </div>
+      </div>
+  
+      <% } %>
+      
+    </div>  
+    <br><br><br><br><br><br>   
+    <form action="/feedback" method="POST">
+        
+        <!-- <fieldset class="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm text-purple-600 dark:bg-black ml-80">
+            <div class="space-y-2 col-span-full lg:col-span-2">
+              <p class="text-xl tracking-wider text-purple-600 font-sans">Feedback</p>
+              <p class="text-base font-sans tracking-wider text-purple-600">Please provide your valuable feedback!</p>
+            </div>
+            <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+              <div class="col-span-full sm:col-span-full">
+                <label for="email" class="text-base tracking-wider ml-1 text-purple-600">Email</label><br>
+                <input id="email" type="email" name="email" placeholder="john@doe.com" class="dark:bg-gray-700 dark:text-white w-100 h-7 mt-1 pl-2 rounded-md focus:outline-none focus:ring focus:border-purple-300">
+              </div>
+              <div class="col-span-full">
+                <label for="feedback" class="text-base tracking-wider ml-1 text-purple-600">Feedback</label><br>
+                <textarea id="feedback" placeholder="Provide your feedback" name="feedback" class="dark:bg-gray-700 dark:text-white w-100  mt-1 pl-2 rounded-md focus:outline-none focus:ring focus:border-purple-300"></textarea>
+              </div>
+              <div class="col-span-full">
+                <button type="submit" class="w-100 h-10 px-5 text-purple-100 transition-colors duration-150 bg-purple-600 rounded-lg focus:shadow-outline hover:bg-purple-700">Submit</button>
+              </div>
+            </div>
+          </fieldset> -->
+          <div
+              class="px-4 py-3 mb-8 rounded-lg shadow-md dark:bg-black"
+            >
+            <div class="space-y-2 col-span-full lg:col-span-2">
+              <p class="text-xl tracking-wider text-purple-600 font-sans">Feedback</p>
+              <p class="text-base font-sans tracking-wider text-purple-600">Please provide your valuable feedback!</p>
+            </div>
+            <%- include('./partials/messages.ejs') %>
+            <br><br>
+              <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">Email</span>
+                <input
+                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                  placeholder="john@doe.com"
+                  name="email"
+                  type="email"
+                />
+              </label>
+              <label class="block mt-4 text-sm">
+                <span class="text-gray-700 dark:text-gray-400">Feedback</span>
+                <textarea
+                  name="feedback"
+                  class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                  rows="3"
+                  placeholder="Please enter the feedback."
+                ></textarea>
+              </label>
+              <button type="submit" class="w-100 h-10 px-5 text-purple-100 transition-colors duration-150 bg-purple-600 rounded-lg focus:shadow-outline hover:bg-purple-700">Submit</button>
+            </div>
+    </form><br><br><br><br><br>
+     
+    <%- include('./partials/footer.ejs') %>
+    
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+
+      /**
+ * Obtain a user's location
+ *
+ * @see https://developers.google.com/web/fundamentals/native-hardware/user-location/obtain-location
+ * @return { object } Location data
+ */
+function getLocation() {
+
+var startPos;
+var geoOptions = { enableHighAccuracy : true };
+
+var geoSuccess = function( position ) {
+  startPos = position;
+  let latitude = startPos.coords.latitude;
+  let longitude = startPos.coords.longitude;
+  displayonMap(latitude, longitude) 
+};
+
+var geoError = function( error ) {
+  console.log( 'Error occurred. Error code: ' + error.code );
+  // error.code can be:
+  // 0: unknown error
+  // 1: permission denied
+  // 2: position unavailable (error response from location provider)
+  // 3: timed out
+};
+
+navigator.geolocation.getCurrentPosition( geoSuccess, geoError, geoOptions );
+
+function displayonMap(lat, long){
+  // window.location.href = `https://www.google.com/maps/dir/?api=1`;
+  window.open(`https://www.google.com/maps/dir/?api=1`, "_blank")
+}
+};
+
+  </script>
+</body>
+</html>
+

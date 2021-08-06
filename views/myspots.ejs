@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+  <html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookings</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/tailwind.output.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="../js/init-alpine.js"></script>
+  </head>
+  <body class="antialiased font-sans bg-gray-200 dark:bg-black">
+    <div class="antialiased font-sans bg-purple-100 mt-5 rounded dark:bg-black">
+      <button class="bg-purple-300  uppercase px-8 py-3 ml-2 mt-2 hover:bg-purple-400 rounded-full  font-serif text-purple-100 mr-1 mb-1" type="button">
+          <a href="/dashboard" class="hover:no-underline hover:text-purple-100">Back to Dashboard</a>
+        </button>
+      <div class="container mx-auto px-4 sm:px-8">
+        <div class="py-8">
+            <div>
+                <h2 class="text-2xl text-purple-500 font-serif leading-tight">My Spots</h2>
+            </div>
+            </div> 
+            <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                    <table class="min-w-full leading-normal">
+                        <thead>
+                            <tr>
+                                <th
+                                    class="dark:bg-black px-5 py-3 border-b-2 border-gray-200 bg-purple-100  text-left text-xs font-semibold text-purple-500 uppercase tracking-wider">
+                                    Area
+                                </th>
+                                 <th
+                                    class="dark:bg-black px-5 py-3 border-b-2 border-gray-200 bg-purple-100 text-left text-xs font-semibold text-purple-500 uppercase tracking-wider">
+                                    Pic
+                                </th>
+                                <th
+                                    class="dark:bg-black px-5 py-3 border-b-2 border-gray-200 bg-purple-100 text-left text-xs font-semibold text-purple-500 uppercase tracking-wider">
+                                    Capacity
+                                </th>
+                                <th
+                                    class="dark:bg-black px-5 py-3 border-b-2 border-gray-200 bg-purple-100 text-left text-xs font-semibold text-purple-500 uppercase tracking-wider">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           <% for (var i=0; i<spot.length ; i++) { %>
+                            <% if (userEmailInSession == email[i]) { %>
+                              <tr>
+                                <td class="dark:bg-black px-5 py-2 border-b border-gray-200 bg-purple-50 text-sm">
+                                    <div class="flex items-center">
+                                        <div class="ml-3">
+                                            <p class="text-indigo-500 whitespace-no-wrap">
+                                                <%= area[i] %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="dark:bg-black px-5 py-2 border-b border-gray-200 bg-purple-50 text-sm">
+                                  <div class="flex-shrink-0 w-10 h-10">
+                                    <img class="w-full h-full rounded-full transform hover:scale-150"
+                                        src="../uploads/spot/<%= pic[i] %>"
+                                        alt="" />
+                                </div>
+                                </td>
+                                <td class="dark:bg-black px-5 py-2 border-b border-gray-200 bg-purple-50 text-sm">
+                                    <p class="text-indigo-500 whitespace-no-wrap">
+                                        <%= capacity[i] %>
+                                    </p>
+                                </td>
+                                <td class="dark:bg-black px-3 py-2 border-b border-gray-200 bg-purple-50 text-sm">
+                                  
+                                  <form action="/deletemyspots/<%= id[i] %>" method="POST">
+                                    <button type="submit" class="rounded-full ml-5">
+                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="fill-current text-red-600 h-7 w-15">
+                                      <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                      </svg>
+                                  </button>
+                                  </form>
+                                </td>
+                            </tr>
+                            <!-- Edit Modal -->
+                          <div class="hidden overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center" id="modal-id">
+                              <div class="relative w-auto my-6 mx-auto max-w-3xl">
+                                <!--content-->
+                                <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-purple-50 outline-none focus:outline-none">
+                                  <!--header-->
+                                  <div class="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
+                                    <h3 class="text-3xl font-semibold">
+                                      Please enter the details
+                                    </h3>
+                                    <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" onclick="toggleModal('modal-id')">
+                                      <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                                        ×
+                                      </span>
+                                    </button>
+                                  </div>
+                                  <!--body-->
+                                  <section class="container px-4 py-4 mx-auto">
+                                    <div class="w-full mx-auto space-y-5 sm:w-8/12 md:w-6/12 lg:w-4/12 xl:w-3/12">
+                                      <form class="space-y-4" action="/editmyspots/<%= id[i] %>" method="POST" enctype="multipart/form-data">
+                                        <input type="hidden" name="email" value="<%= email %>">
+                                        <input type="hidden" name="firstname" value="<%= firstname %>">
+                                        <label class="block">
+                                          <span class="block mb-1 text-xs font-medium text-gray-700">Area Name</span>
+                                          <input
+                                            class="form-input w-full"
+                                            type="text"
+                                            name="area"
+                                            placeholder="Ex. Shelby"
+                                            required
+                                          />
+                                        </label>
+                                        <label class="block">
+                                          <span class="block mb-1 text-xs font-medium text-gray-700"
+                                            >Spot Picture</span
+                                          >
+                                          <input
+                                            class="form-input w-64"
+                                            type="file"
+                                            placeholder="Ex. james@bond.com"
+                                            name="pic"
+                                            required
+                                          />
+                                        </label>
+                                        <label class="block">
+                                          <span class="block mb-1 text-xs font-medium text-gray-700"
+                                            >Capacity</span
+                                          >
+                                          <input
+                                            class="form-input w-full"
+                                            type="number"
+                                            placeholder="Ex. 5"
+                                            name="capacity"
+                                            required
+                                          />
+                                        </label>
+                                  <!--footer-->
+                                  <div class="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
+                                    <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" onclick="toggleModal('modal-id')">
+                                      Close
+                                    </button>
+                                    <button type="submit" class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" onclick="toggleModal('modal-id')">
+                                      Post
+                                    </button>
+                                  </form>
+                                </div>
+                              </section>
+                                  </div>
+                                </div>
+                              </div>
+                          <%} else { continue; } %>
+                             
+                          
+                        <% } %>
+                        </tbody>
+                    </table>
+  <!-- Grouped circle -->
+      <% if(pages > 0) { %> <!-- show pagination if there is pages -->
+      <div class="mb-10 w-full md:w-1/2 text-center md:text-left">
+        <div class="inline-block mt-3" style="margin-left: 30rem;">
+            <span class="text-xs xs:text-sm text-indigo-500">Showing 1 to 10 of <%= count %> Entries</span>
+          <hr class="my-2">
+          <nav class="inline-flex shadow-md text-sm leading-5 dark:bg-black text-purple-600 bg-purple-50 border-gray-400 rounded-full py-2 px-4">
+              <% if(current == 1) { %>
+              <a href="#" class="flex mx-1 h-10 items-center justify-center disabled:opacity-50 hover:no-underline hover:text-purple-600">
+              First<!-- prev -->
+            </a>
+            <% } else { %>
+              <a href="1" class="flex mx-1 h-10 items-center justify-center hover:no-underline hover:text-purple-600">First</a>
+              <% } %>
+                <!-- ITEMS  -->
+            <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+            <% if(i !== 1) { %>
+              <a href="#" class="flex mx-1 rounded-full w-10 h-10 items-center justify-center hover:bg-gray-300 transition ease-in-out duration-300 disabled:opacity-50 hover:no-underline hover:text-purple-600">
+              ...
+            </a>
+            <% } %>
+            <% for(; i <= (Number(current) + 4) && i <= pages; i++) { %>
+              <% if(i == current) { %>
+                  <a href="<%= i %>" class="flex mx-1 rounded-full w-10 h-10 items-center justify-center hover:bg-gray-300 transition ease-in-out duration-300 hover:no-underline hover:text-purple-600">
+                      <%= i %>
+                    </a>
+              <% } else { %>
+                  <a href="<%= i %>" class="flex mx-1 rounded-full w-10 h-10 items-center justify-center hover:bg-gray-300 transition ease-in-out duration-300 hover:no-underline hover:text-purple-600"><%= i %></a>
+                  <% } %>
+              <% if (i == Number(current) + 4 && i < pages) { %>
+                  <a href="#" class="flex mx-1 rounded-full w-10 h-10 items-center justify-center shadow-sm bg-blue-600 hover:bg-blue-500 text-gray-100 disabled:opacity-50 hover:no-underline hover:text-purple-600">...</a>
+            <% } %>
+            <% } %>
+              <!-- LAST ITEM -->
+              <% if(current == pages) { %>
+            <a href="#" class="flex mx-1 h-10 items-center justify-center disabled:opacity-50 hover:no-underline hover:text-purple-600">
+             <!-- next --> Last
+            </a>
+            <% } else { %>
+              <a href="<%= pages %>" class="flex mx-1 h-10 items-center justify-center hover:no-underline hover:text-purple-600">Last</a>
+              <% } %>
+                </nav>
+                    </div>
+                  </div>
+                  <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function toggleModal(modalID){
+          document.getElementById(modalID).classList.toggle("hidden");
+          document.getElementById(modalID + "-backdrop").classList.toggle("hidden");
+          document.getElementById(modalID).classList.toggle("flex");
+          document.getElementById(modalID + "-backdrop").classList.toggle("flex");
+        }
+      </script>
+  </body>
+  </html>

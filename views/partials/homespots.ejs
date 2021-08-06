@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spots</title>
+  <style>
+    .loc {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/tailwind.output.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+      defer
+    ></script>
+    <script src="../js/init-alpine.js"></script>
+</head>
+<body class="dark:bg-black">   
+  <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4 dark:bg-black">
+    <!-- Card -->
+    <% for (var i=0; i<len ; i++) { %>
+    <div
+      class="flex items-center p-4 rounded-lg shadow-xs dark:bg-black"
+    >
+    <div class="max-w-xs mx-auto dark:border-pink-500  dark:bg-gray-700 shadow-lg rounded-lg overflow-hidden">
+      <div class="px-4 py-2">
+        <div class="loc">
+          <h1 id="area" class="text-gray-800 dark:text-white  font-bold text-3xl uppercase"><%= area[i] %></h1><button class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" onclick="getLocation();">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mb-1" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+            </svg> 
+          </button>
+          </div>    
+                  <p id="firstname" class="text-gray-600 dark:text-gray-400 text-sm mt-1"><%= firstname[i] %></p>
+                <p id="firstname" class="text-gray-600 dark:text-gray-400 text-sm mt-1"><%= createdAt[i] %></p>
+          
+      </div>
+
+      <img class="h-48 w-full object-cover mt-2" src="../uploads/spot/<%= file[i] %>" alt="Spots">
+
+      <div class="flex items-center justify-between px-4 py-2 bg-gray-900">
+        <% if (capacity[i] == 0) { %>
+          <h1 class="text-white font-bold text-lg"><%= capacity[i] %></h1> 
+          <button class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" type="button" style="transition: all .15s ease" onclick="getLocation();">
+            No vacancy
+          </button>
+        <% } if (capacity[i] > 0) { %>
+          <h1 class="text-white font-bold text-lg"><%= capacity[i] %></h1> 
+          <form action="/users/login" method="POST">
+            <input
+            class="form-input w-full"
+            type="hidden"
+            name="id"
+            value="<%= id[i] %>"
+            required
+          />
+            <input
+            class="form-input w-full"
+            type="hidden"
+            name="firstname"
+            value="<%= firstname[i] %>"
+            required
+          />
+          <input
+            class="form-input w-full"
+            type="hidden"
+            placeholder="Ex. james@bond.com"
+            name="email"
+            value="<%= email[i] %>"
+            required
+          />
+          <input
+            class="form-input w-full"
+            type="hidden"
+            name="userEmailInSession"
+            value="<%= userEmailInSession %>"
+            required
+          />
+          <input
+            class="form-input w-full"
+            type="hidden"
+            name="userFirstNameInSession"
+            value="<%= userFirstNameInSession %>"
+            required
+          />
+        <input
+            type="hidden"
+            name="area"
+            id="area"
+            value="<%= area[i] %>"
+            required
+          />
+          <button type="submit" class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1" style="transition: all .15s ease">
+            Book
+          </button>
+        </form>
+          <% } %>
+      </div>
+  </div>
+    </div>
+
+    <% } %>
+    
+  </div>  
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script>
+
+      /**
+ * Obtain a user's location
+ *
+ * @see https://developers.google.com/web/fundamentals/native-hardware/user-location/obtain-location
+ * @return { object } Location data
+ */
+function getLocation() {
+
+var startPos;
+var geoOptions = { enableHighAccuracy : true };
+
+var geoSuccess = function( position ) {
+  startPos = position;
+  let latitude = startPos.coords.latitude;
+  let longitude = startPos.coords.longitude;
+  displayonMap(latitude, longitude) 
+};
+
+var geoError = function( error ) {
+  console.log( 'Error occurred. Error code: ' + error.code );
+  // error.code can be:
+  // 0: unknown error
+  // 1: permission denied
+  // 2: position unavailable (error response from location provider)
+  // 3: timed out
+};
+
+navigator.geolocation.getCurrentPosition( geoSuccess, geoError, geoOptions );
+
+function displayonMap(lat, long){
+  // window.location.href = `https://www.google.com/maps/dir/?api=1`;
+  window.open(`https://www.google.com/maps/dir/?api=1`, "_blank")
+}
+};
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/tailwind.output.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="../js/init-alpine.js"></script>
+  <title>Book Spot</title>
+</head>
+<body class="dark:bg-black">
+  <form class="container mx-auto flex flex-col space-y-12 mt-36" id="bookSpotForm" action="/bookspot" method="POST">
+    <!-- mod -->
+<fieldset class="grid grid-cols-1 gap-6 p-6 rounded-md shadow-sm bg-purple-400 dark:bg-black dark:text-purple-600">
+  <div class="space-y-2 col-span-full lg:col-span-2">
+  <p class="text-center text-xl tracking-wider text-purple-50 font-sans">Book Spot</p>
+  </div>
+  <div class="grid grid-cols-6 gap-4 col-span-full lg:col-span-full ml-96">
+    <div class="col-span-full sm:col-span-3">
+      <label for="vno" class="text-base tracking-wider ml-1 text-purple-50">Vehicle No.</label>
+      <input type="text" placeholder="Ex. TN-72-AB-1234" id="vno" name="vno"  class="dark:bg-gray-700 dark:text-white w-full h-7 mt-1 pl-2 font-normal tracking-wider rounded-md focus:outline-none focus:ring focus:border-purple-300" required>
+    </div>
+    <br>
+    <div class="col-span-full sm:col-span-3">
+      <label for="timeflag" class="text-base tracking-wider ml-1 text-purple-50">Time</label>
+      <select name="timeflag" id="timeflag" class="dark:bg-gray-700 dark:text-white">
+        <option value="hour">hour</option>
+        <option value="min">min</option>
+      </select>
+  </div><br>
+  <div class="col-span-full sm:col-span-3">
+      <label for="time" class="text-base tracking-wider ml-1 text-purple-50">Time</label>
+        <input type="number" placeholder="in minutes" name="time" id="time" required class="dark:bg-gray-700 dark:text-white w-full pl-2 h-7 mt-1 font-normal tracking-wider rounded-md focus:outline-none focus:ring focus:border-purple-300">
+  </div>
+    <!-- end -->
+    <input
+      class="form-input w-full "
+      type="hidden"
+      name="id"
+      id="id"
+      value="<%= id %>"
+      required
+    />
+    <input
+      class="form-input w-full "
+      type="hidden"
+      name="firstname"
+      id="firstname"
+      value="<%= firstname %>"
+      required
+    />
+    <input
+      class="form-input w-full"
+      type="hidden"
+      placeholder="Ex. james@bond.com"
+      name="email"
+      id="email"
+      value="<%= email %>"
+      required
+    />
+    <input
+      class="form-input w-full"
+      type="hidden"
+      name="userEmailInSession"
+      id="userEmailInSession"
+      value="<%= userEmailInSession %>"
+      required
+    />
+    <input
+      class="form-input w-full"
+      type="hidden"
+      name="userFirstNameInSession"
+      id="userFirstNameInSession"
+      value="<%= userFirstNameInSession %>"
+      required
+    />
+  <input
+      type="hidden"
+      name="area"
+      id="area"
+      value="<%= area %>"
+      required
+    />
+</fieldset>
+  <button type="submit" class="h-10 px-5  text-purple-100 transition-colors duration-150 bg-purple-600 rounded-lg focus:shadow-outline hover:bg-purple-700">Submit</button>
+
+</form>
+
+<!-- <script src="/socket.io/socket.io.js"></script> -->
+
+<script>
+  // var socket = io();
+
+  // var bookSpotForm = document.getElementById('bookSpotForm');
+
+  // bookSpotForm.addEventListener('submit', (e) => {
+  //   e.preventDefault();
+
+  //   var id = document.getElementById('id').value;
+  // var firstname = document.getElementById('firstname').value;
+  // var email = document.getElementById('email').value;
+  // var userEmailInSession = document.getElementById('userEmailInSession').value;
+  // var userFirstNameInSession = document.getElementById('userFirstNameInSession').value;
+  // var vno = document.getElementById('vno').value;
+  // var time = document.getElementById('time').value;
+  // var timeflag = document.getElementById('timeflag').value;
+  // var area = document.getElementById('area').value;
+
+  // socket.emit('time', time);
+
+  // var xhttp = new XMLHttpRequest();
+  // xhttp.onreadystatechange = function() {
+  //   if (this.readyState == 4 && this.status == 200) {
+  //     console.log(this.responseText);
+  //   }
+  // };
+  // xhttp.open("POST", "/bookspot", true);
+  // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  // xhttp.send(`id=${id}&
+  // email=${email}&
+  // firstname=${firstname}&
+  // userEmailInSession=${userEmailInSession}&
+  // userFirstNameInSession=${userFirstNameInSession}&
+  // vno=${vno}&
+  // time=${time}&
+  // timeflag=${timeflag}&
+  // area=${area}`);
+  // })
+
+  
+</script>
+</body>
+</html>
